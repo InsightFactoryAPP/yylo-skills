@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "packageId": "yylo-skills",
+  "sourceVersion": "2.0.1",
+  "evidenceDate": "2026-09-14",
+  "prerequisites": "Review the canonical skill instructions. Use the open Skills CLI, compatible YYLO CLI, or standalone Ledger installer.",
+  "releases": [
+    {
+      "version": "2.0.1",
+      "url": "https://github.com/yylo-dev/yylo-skills/tree/75d82af95abbf784be42a1aaf03e820ed0c3b12a",
+      "integrity": "git-75d82af95abbf784be42a1aaf03e820ed0c3b12a",
+      "readmeSha256": "56cb33559c9b94133e2f0fea4d34becb82f71e1315a9743683a566abeb0c4a68"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "catalog",
+      "title": "Seven procedures, three groups",
+      "summary": "Discover Ledger Records, planning and bounded execution skills.",
+      "details": [
+        "Four skills operate standalone Ledger: ledger-tasks-yylo, wiki-yylo, workflow-yylo and artifact-yylo. Understand-project and planning precede the explicitly requested one-task Ralph loop.",
+        "Skills are independently versioned instructions, not a fourth runtime system. Full instructions remain in the canonical tagged repository."
+      ],
+      "commands": [
+        "npx skills add yylo-dev/yylo-skills\nnpx skills add yylo-dev/yylo-skills --skill wiki-yylo"
+      ],
+      "boundary": "Skills cannot grant execution, publication or production authority. Review them like code.",
+      "sourceFiles": [
+        "README.md",
+        "skills.sh.json"
+      ],
+      "verifiedReleases": [
+        "2.0.1"
+      ],
+      "releaseEvidence": "README sections matching this capability, inspected in the hash-bound published archive."
+    }
+  ]
+}
