@@ -8,7 +8,6 @@ Reusable agent skills maintained by [YYLO](https://yylo.dev). This repository is
 [![Mentioned in GAIA Skill Tree](https://awesome.re/mentioned-badge.svg)](https://github.com/gaia-research/gaia-skill-tree/blob/main/registry/named/yylo-dev/ledger-tasks-yylo.md)
 [![Mentioned in Claude Skills Collection](https://awesome.re/mentioned-badge.svg)](https://github.com/abubakarsiddik31/claude-skills-collection)
 [![Mentioned in Awesome Skills](https://awesome.re/mentioned-badge.svg)](https://github.com/gmh5225/awesome-skills)
-[![Mentioned in Commonly-used-high-value-skills](https://awesome.re/mentioned-badge.svg)](https://github.com/seaworld008/Commonly-used-high-value-skills)
 
 ## Install
 
