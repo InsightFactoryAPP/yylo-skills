@@ -3,6 +3,13 @@
 Reusable agent skills maintained by [YYLO](https://yylo.dev). This repository is the canonical, independently versioned source for skills used by YYLO CLI and YYLO Ledger.
 
 [![skills.sh](https://skills.sh/b/yylo-dev/yylo-skills)](https://skills.sh/yylo-dev/yylo-skills)
+[![Mentioned in Claude Skill Registry](https://awesome.re/mentioned-badge.svg)](https://github.com/majiayu000/claude-skill-registry)
+[![Mentioned in Agent Skill Exchange](https://awesome.re/mentioned-badge.svg)](https://github.com/agentskillexchange/skills)
+[![Mentioned in GAIA Skill Tree](https://awesome.re/mentioned-badge.svg)](https://github.com/gaia-research/gaia-skill-tree/blob/main/registry/named/yylo-dev/ledger-tasks-yylo.md)
+[![Mentioned in Claude Skills Collection](https://awesome.re/mentioned-badge.svg)](https://github.com/abubakarsiddik31/claude-skills-collection)
+[![Mentioned in Awesome Skills](https://awesome.re/mentioned-badge.svg)](https://github.com/gmh5225/awesome-skills)
+[![Mentioned in SkillsAllYouNeed](https://awesome.re/mentioned-badge.svg)](https://github.com/kishormorol/SkillsAllYouNeed)
+[![Featured in PM Skills Community](https://mohitagw15856.github.io/pm-claude-skills/assets/community-badge.svg)](https://github.com/mohitagw15856/pm-claude-skills/blob/main/COMMUNITY-SKILLS.md)
 
 ## Install
 
