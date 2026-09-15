@@ -3,6 +3,8 @@ name: ralph-loop-yylo
 description: Execute exactly one explicitly assigned YYLO Ledger task through the Ralph loop to a validated queued commit. Use only when the user explicitly requests ralph-loop-yylo.
 ---
 
+# Execute one assigned task in the Ralph loop
+
 Read [references/implement.md](references/implement.md) completely and follow it.
 
 Stay within the assigned task. Do not select unrelated work, edit `tasks.md`, auto-tag releases, push, deploy, mutate production, or broaden scope because another issue is noticed. Record a bounded related Kanban follow-up when necessary.
