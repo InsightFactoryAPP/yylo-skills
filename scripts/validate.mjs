@@ -73,7 +73,7 @@ const grouped = config.groupings.flatMap((group) => group.skills).sort();
 if (JSON.stringify(grouped) !== JSON.stringify(expected)) {
   throw new Error(`skills.sh.json grouping mismatch: ${grouped.join(', ')}`);
 }
-if (fs.readFileSync(path.join(root, 'VERSION'), 'utf8').trim() !== '2.0.0') {
+if (!/^2\.\d+\.\d+$/.test(fs.readFileSync(path.join(root, 'VERSION'), 'utf8').trim())) {
   throw new Error('VERSION must identify the v2 skill contract');
 }
 console.log(`validated ${expected.length} canonical skills and invocation contracts`);
