@@ -56,13 +56,39 @@ for (const slug of expected) {
 
 const markdown = [];
 for (const directory of [root, ...expected.map((slug) => path.join(skillsRoot, slug))]) {
-  for (const name of fs.readdirSync(directory)) {
-    if (name.endsWith('.md')) markdown.push(fs.readFileSync(path.join(directory, name), 'utf8'));
-  }
+  const visit = (current) => {
+    for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
+      if (entry.name.startsWith('.')) continue;
+      const file = path.join(current, entry.name);
+      if (entry.isDirectory() && current !== root) visit(file);
+      else if (entry.isFile() && entry.name.endsWith('.md')) markdown.push(fs.readFileSync(file, 'utf8'));
+    }
+  };
+  visit(directory);
 }
 const joined = markdown.join('\n');
 for (const old of legacy) {
   if (joined.includes(old)) throw new Error(`legacy skill reference remains: ${old}`);
+}
+
+const normalized = joined.replace(/\s+/g, ' ');
+for (const retired of [
+  /\byy(?:lo)?\s+merge\s+(?:arbiter|drive|next|resolve)\b/i,
+  /sole lifecycle-semantic review owner|Reviewer A then Reviewer B|risk-based review sequence/i,
+  /Run `yy task preflight TASK_ID` before|validates the exact preflighted tip/i,
+]) {
+  if (retired.test(normalized)) throw new Error(`retired lifecycle instruction: ${retired}`);
+}
+const implementation = fs.readFileSync(path.join(skillsRoot, 'ralph-loop-yylo/references/implement.md'), 'utf8');
+for (const contract of [
+  'Optional read-only `yy task preflight TASK_ID`', 'not a prerequisite',
+  'Finish independently enforces admission', 'configured validation',
+  'outside merge', 'launches no models', 'fencing token', 'hydration',
+  'yy task finish TASK_ID --lease-token <current-token>',
+  'yy merge status TASK_ID', 'yy merge land TASK_ID', 'yy merge project TASK_ID',
+  'projects Ledger automatically', 'Recompose and recheck', 'preserve private conflicts',
+]) {
+  if (!implementation.replace(/\s+/g, ' ').includes(contract)) throw new Error(`missing native delivery contract: ${contract}`);
 }
 
 const config = JSON.parse(fs.readFileSync(path.join(root, 'skills.sh.json'), 'utf8'));
@@ -76,4 +102,8 @@ if (JSON.stringify(grouped) !== JSON.stringify(expected)) {
 if (!/^2\.\d+\.\d+$/.test(fs.readFileSync(path.join(root, 'VERSION'), 'utf8').trim())) {
   throw new Error('VERSION must identify the v2 skill contract');
 }
-console.log(`validated ${expected.length} canonical skills and invocation contracts`);
+const plugin = JSON.parse(fs.readFileSync(path.join(root, '.claude-plugin/plugin.json'), 'utf8'));
+if (plugin.version !== fs.readFileSync(path.join(root, 'VERSION'), 'utf8').trim()) {
+  throw new Error('plugin version must match VERSION');
+}
+console.log(`validated ${expected.length} canonical skills, nested lifecycle guidance and invocation contracts`);

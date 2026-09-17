@@ -33,6 +33,28 @@ npx skills add yylo-dev/yylo-skills --skill wiki-yylo
 
 Every canonical slug ends in `-yylo`, keeping selector prefixes useful: type `w` for wiki/workflow, `a` for artifacts, `p` for planning, `r` for the Ralph loop, or `u` for project understanding. Review skill instructions and scripts before installing them. Published versions use immutable `vMAJOR.MINOR.PATCH` tags; `VERSION` identifies the repository release represented by the default branch.
 
+## Native delivery and compatible CLI installation
+
+Version 2.0.2 clarifies optional read-only preflight, finish-enforced admission
+and validation, explicit project tests/reviews outside merge, and native
+`yy merge status|land|project` delivery with projection recovery. The canonical
+Ralph implementation contract lives in `skills/ralph-loop-yylo/references/implement.md`;
+edit it here, not in installed agent directories or old CLI template copies.
+
+A compatible YYLO CLI declares its supported skill range in `yyloSkills.version`.
+Run `yy skills install` or `yy skills update` explicitly to select the latest
+compatible stable release and update all three agent copies. Unchanged
+receipt-owned skills upgrade without force; differing customized/unrecorded
+copies require review. Unrecorded legacy copies remain preserved and flagged,
+not silently deleted. CLI installation alone does not replace skills.
+
+Validate before delivery with `node scripts/validate.mjs`. It checks nested
+references for retired lifecycle instructions as well as invocation contracts
+and plugin version parity. Maintainers must separately publish an immutable
+`v2.0.2` release before shipping a CLI that requires it. `capabilities.json`
+retains evidence for previously published releases; do not invent new release
+hashes before publication.
+
 ## Skills
 
 | Skill | Purpose |
