@@ -13,6 +13,14 @@ Keep durable instructions concise and evidence-backed. Status belongs in the tas
 
 Controller checkpoints are best-effort local durability warnings after terminal metadata is durable. They never gate `yy pi`, `yy task`, `yy merge`, product commits, candidates, or releases.
 
+## User-facing Record results
+
+After creation, update, discovery, or handoff, report the Record kind/profile,
+actual immutable Record ID, and actual Ledger slug from the returned Record or a
+native get readback. Never invent a slug from the title or confuse it with the ID.
+If the selected API omits a field, say it is unavailable rather than fabricate it.
+IDs remain authoritative for relations and lifecycle operations; slugs aid discovery.
+
 ## Complete assigned request
 
 Treat the following as the complete user-assigned request. Preserve task references and directives literally; resolve them only through the normal agent workflow.

@@ -17,4 +17,12 @@ enable-shell-directives: true
 
 Use `--id`, not legacy `--ID`, for Kanban mutations. Return the task IDs and a short dependency/order summary.
 
+## User-facing Record results
+
+After creation, update, discovery, or handoff, report the Record kind/profile,
+actual immutable Record ID, and actual Ledger slug from the returned Record or a
+native get readback. Never invent a slug from the title or confuse it with the ID.
+If the selected API omits a field, say it is unavailable rather than fabricate it.
+IDs remain authoritative for relations and lifecycle operations; slugs aid discovery.
+
 $ARGUMENTS

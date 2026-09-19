@@ -14,6 +14,14 @@ enable-shell-directives: true
 5. If the user requested planning, hand the findings to `plan-ledger-tasks-yylo`. If implementation was requested, work only in the task worktree returned by `yy task start TASK_ID`.
 6. Write a durable operational spec only when requested or materially useful. Draft it externally, preflight the installed `yy ledger artifact` API, capture it as an immutable `report` Artifact Record with provenance/retention, and verify retrieval, digest, and history. If that API is unavailable, stop with the external draft intact; never fall back to product `docs/`, task bodies/responses, new `.juno_task/specs`, or direct controller-store edits. Product `docs/` remains reserved for documentation shipped with the product. Do not update root instructions with transient status.
 
+## User-facing Record results
+
+After creation, update, discovery, or handoff, report the Record kind/profile,
+actual immutable Record ID, and actual Ledger slug from the returned Record or a
+native get readback. Never invent a slug from the title or confuse it with the ID.
+If the selected API omits a field, say it is unavailable rather than fabricate it.
+IDs remain authoritative for relations and lifecycle operations; slugs aid discovery.
+
 ## Invocation contract
 
 The structured views below intentionally alias parts of the complete request; they are not additional user arguments.

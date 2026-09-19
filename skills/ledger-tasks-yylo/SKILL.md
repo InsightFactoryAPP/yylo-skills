@@ -181,4 +181,12 @@ Run YYLO Ledger and workflows from the controller. A task checkout may implement
 - `JUNO_VERBOSE=true` — Show informational messages
 - `JUNO_KANBAN_LIST_BODY_TRUNCATE_CHARS=N` — Override list body truncation (default: 1200)
 
+## User-facing Record results
+
+After creation, update, discovery, or handoff, report the Record kind/profile,
+actual immutable Record ID, and actual Ledger slug from the returned Record or a
+native get readback. Never invent a slug from the title or confuse it with the ID.
+If the selected API omits a field, say it is unavailable rather than fabricate it.
+IDs remain authoritative for relations and lifecycle operations; slugs aid discovery.
+
 $ARGUMENTS

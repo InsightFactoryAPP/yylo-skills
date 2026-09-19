@@ -42,7 +42,9 @@ for (const slug of expected) {
   if (!text.startsWith('---\n') || !text.includes(`\nname: ${slug}\n`)) {
     throw new Error(`frontmatter identity mismatch for ${slug}`);
   }
-  for (const literal of requiredContracts[slug]) {
+  for (const literal of [...requiredContracts[slug], 'Record kind/profile',
+    'actual immutable Record ID', 'actual Ledger slug', 'native get readback',
+    'Never invent a slug', 'IDs remain authoritative']) {
     if (!text.includes(literal)) throw new Error(`${slug} lost invocation contract: ${literal}`);
   }
   for (const match of text.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)) {
@@ -73,6 +75,7 @@ for (const old of legacy) {
 
 const normalized = joined.replace(/\s+/g, ' ');
 for (const retired of [
+  /public Ledger .* surface is task-oriented|Do not advertise `record`/i,
   /\byy(?:lo)?\s+merge\s+(?:arbiter|drive|next|resolve)\b/i,
   /sole lifecycle-semantic review owner|Reviewer A then Reviewer B|risk-based review sequence/i,
   /Run `yy task preflight TASK_ID` before|validates the exact preflighted tip/i,
