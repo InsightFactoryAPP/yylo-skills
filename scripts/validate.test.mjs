@@ -28,6 +28,10 @@ for (const [name, injected] of [
   ['obsolete capability denial', 'Do not advertise `record` or wiki namespaces.'],
   ['merge-owned reviewers', 'The managed queue is the sole lifecycle-semantic review owner.'],
   ['mandatory preflight', 'Run `yy task preflight TASK_ID` before expensive final validation.'],
+  ['autonomous implementation', 'yy task run TASK_ID'],
+  ['automatic resume', 'yy task resume TASK_ID'],
+  ['budget reset', 'yy task recover-wall-budget TASK_ID'],
+  ['watch execution', 'yy watch exec -- npm test'],
 ]) {
   test(`rejects ${name} in nested skill references`, () => {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'yylo-skill-contract-'));

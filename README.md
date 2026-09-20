@@ -41,6 +41,14 @@ and validation, explicit project tests/reviews outside merge, and native
 Ralph implementation contract lives in `skills/ralph-loop-yylo/references/implement.md`;
 edit it here, not in installed agent directories or old CLI template copies.
 
+The current source contract places implementation, tests and commits with the
+external agent. The CLI prepares workspaces and verifies delivery. Autonomous
+task execution and budget recovery are retired; optional watch observation
+never launches, retries, cancels or completes work. Explicit continuation must
+preserve the workspace, historical evidence and current ownership checks.
+These source changes require a separately reviewed immutable skills release;
+source commits do not update already-installed skills or authorize publication.
+
 A compatible YYLO CLI declares its supported skill range in `yyloSkills.version`.
 Run `yy skills install` or `yy skills update` explicitly to select the latest
 compatible stable release and update all three agent copies. Unchanged

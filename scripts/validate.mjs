@@ -79,6 +79,8 @@ for (const retired of [
   /\byy(?:lo)?\s+merge\s+(?:arbiter|drive|next|resolve)\b/i,
   /sole lifecycle-semantic review owner|Reviewer A then Reviewer B|risk-based review sequence/i,
   /Run `yy task preflight TASK_ID` before|validates the exact preflighted tip/i,
+  /\byy(?:lo)?\s+task\s+(?:run|resume|recover-predispatch|recover-wall-budget)\b/i,
+  /\byy(?:lo)?\s+watch\s+exec\b/i,
 ]) {
   if (retired.test(normalized)) throw new Error(`retired lifecycle instruction: ${retired}`);
 }
@@ -90,6 +92,8 @@ for (const contract of [
   'yy task finish TASK_ID --lease-token <current-token>',
   'yy merge status TASK_ID', 'yy merge land TASK_ID', 'yy merge project TASK_ID',
   'projects Ledger automatically', 'Recompose and recheck', 'preserve private conflicts',
+  'The external agent performs implementation', 'budget recovery are retired',
+  'read-only observer of existing evidence', 'never replay/reset them automatically',
 ]) {
   if (!implementation.replace(/\s+/g, ' ').includes(contract)) throw new Error(`missing native delivery contract: ${contract}`);
 }
