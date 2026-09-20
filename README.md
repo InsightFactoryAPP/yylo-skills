@@ -35,7 +35,11 @@ Every canonical slug ends in `-yylo`, keeping selector prefixes useful: type `w`
 
 ## Native delivery and compatible CLI installation
 
-Version 2.0.2 clarifies optional read-only preflight, finish-enforced admission
+Version 2.0.3 requires user-facing Record results to include the actual kind/profile,
+immutable ID, and Ledger-returned slug. Missing fields must be reported as unavailable,
+not guessed. Validator regressions protect this contract across all seven skills.
+
+Version 2.0.2 clarified optional read-only preflight, finish-enforced admission
 and validation, explicit project tests/reviews outside merge, and native
 `yy merge status|land|project` delivery with projection recovery. The canonical
 Ralph implementation contract lives in `skills/ralph-loop-yylo/references/implement.md`;
@@ -58,8 +62,9 @@ not silently deleted. CLI installation alone does not replace skills.
 
 Validate before delivery with `node scripts/validate.mjs`. It checks nested
 references for retired lifecycle instructions as well as invocation contracts
-and plugin version parity. Maintainers must separately publish an immutable
-`v2.0.2` release before shipping a CLI that requires it. `capabilities.json`
+and plugin version parity. Run `node --test scripts/validate.test.mjs` for regression
+coverage. Maintainers publish each new version with a new immutable tag; never
+replace an existing release tag. `capabilities.json`
 retains evidence for previously published releases; do not invent new release
 hashes before publication.
 
