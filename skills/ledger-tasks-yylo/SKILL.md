@@ -149,8 +149,20 @@ yy ledger merge ./sub1/.juno_task ./sub2/.juno_task --into ./.juno_task \
 
 ### Output Formats
 
-All commands support: `-f json`, `-f ndjson` (default), `-f xml`, `-f table`
-Add `--raw` for compact output. Add `-p` for pretty print.
+Legacy task formats: `-f json`, `-f ndjson`, `-f xml`, `-f table`.
+`list/search/ready/order -f json` emits one object containing `tasks` and
+`summary`, including empty results. Use `--raw` for compact JSON or `-f json -p`
+for indented JSON. Without a format, output defaults to pretty JSON; `--raw`
+makes it compact, while `--pretty` selects human-readable task rendering.
+NDJSON emits one task per line and no summary record (zero bytes when empty).
+For non-empty list/search/ready, NDJSON/XML/table summaries go to stderr;
+order retains no stderr summary. Empty XML emits an empty `<tasks>` document.
+`--raw` accepts JSON/NDJSON only and cannot be combined with `--pretty`.
+Unsupported combinations fail before task enumeration. Style flags may appear
+before or after these collection commands; the canonical wrapper preserves
+this contract and keeps runtime diagnostics on stderr.
+These source contracts require a matching Ledger release; skill source delivery
+alone does not install or activate that runtime.
 
 ### Best Practices
 
