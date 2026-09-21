@@ -22,8 +22,9 @@
     },
     {
       "title": "Execution",
-      "description": "Skills for bounded task-driven delivery.",
+      "description": "Skills for bounded task-driven delivery and pilot-gated model evaluation.",
       "skills": [
+        "benchmark-yylo",
         "ralph-loop-yylo"
       ]
     }

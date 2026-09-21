@@ -37,7 +37,7 @@ Every canonical slug ends in `-yylo`, keeping selector prefixes useful: type `w`
 
 Version 2.0.3 requires user-facing Record results to include the actual kind/profile,
 immutable ID, and Ledger-returned slug. Missing fields must be reported as unavailable,
-not guessed. Validator regressions protect this contract across all seven skills.
+not guessed. Validator regressions protect this contract across all canonical skills.
 
 Version 2.0.2 clarified optional read-only preflight, finish-enforced admission
 and validation, explicit project tests/reviews outside merge, and native
@@ -76,9 +76,16 @@ hashes before publication.
 | [`wiki-yylo`](skills/wiki-yylo/) | Find and maintain durable Markdown knowledge as revisioned Ledger Records. |
 | [`workflow-yylo`](skills/workflow-yylo/) | Store and validate workflow Records while keeping execution separately authorized. |
 | [`artifact-yylo`](skills/artifact-yylo/) | Capture and inspect durable, provenance-bound Ledger evidence. |
+| [`benchmark-yylo`](skills/benchmark-yylo/) | Run pilot-gated model studies with historical tasks and per-task Ledger evidence. |
 | [`understand-project-yylo`](skills/understand-project-yylo/) | Inspect the user project before planning or implementation. |
 | [`plan-ledger-tasks-yylo`](skills/plan-ledger-tasks-yylo/) | Create a PDR and implementation-sized Ledger tasks. |
 | [`ralph-loop-yylo`](skills/ralph-loop-yylo/) | Execute exactly one explicitly assigned Ledger task through validated delivery. |
+
+The new `benchmark-yylo` source skill (for YYLO Benchmark / `yylo-benchmark` requests)
+requires a separately reviewed compatible release before installation; it is not
+claimed to exist in the current published version. It distinguishes isolated and
+owner-approved trusted-host runs, canonical `yy pi` dispatch, exact-shape setup
+canaries, invalid infrastructure, immutable repairs and pilot approval gates.
 
 The four Ledger Record skills are usable with standalone Ledger. The planning and execution skills rely on YYLO orchestration. Each skill has one canonical cross-agent source under `skills/<slug>/`; agent-specific variants are added only for demonstrated runtime incompatibility.
 
@@ -90,6 +97,7 @@ Ledger Record namespaces must be present in the installed `yylo-ledger --help` (
 skills.sh.json
 skills/
 ├── artifact-yylo/
+├── benchmark-yylo/
 ├── ledger-tasks-yylo/
 ├── plan-ledger-tasks-yylo/
 ├── ralph-loop-yylo/

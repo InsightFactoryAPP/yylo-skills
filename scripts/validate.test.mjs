@@ -22,6 +22,34 @@ for (const skill of fs.readdirSync(path.join(source, 'skills'))) {
     }
   });
 }
+for (const [file, contract, diagnostic] of [
+  ['SKILL.md', 'yy pi --model openai-codex/<complete-name>', 'lost invocation contract'],
+  ['SKILL.md', 'zero-dispatch setup canary', 'lost invocation contract'],
+  ['SKILL.md', 'Unknown cost is unknown, never zero', 'lost invocation contract'],
+  ['SKILL.md', 'owner approval before task 2', 'lost invocation contract'],
+  ['references/historical-tasks.md', 'conflicting ancestor YYLO workspace', 'missing benchmark preparation contract'],
+  ['references/historical-tasks.md', 'metadata/history retrieval is not byte round-trip proof', 'missing benchmark preparation contract'],
+  ['references/historical-tasks.md', 'not a verified native report', 'missing benchmark preparation contract'],
+]) {
+  test(`rejects removed benchmark boundary: ${contract}`, () => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'yylo-benchmark-contract-'));
+    try {
+      for (const item of ['skills', 'scripts', 'VERSION', 'skills.sh.json', '.claude-plugin']) {
+        fs.cpSync(path.join(source, item), path.join(root, item), { recursive: true });
+      }
+      const target = path.join(root, 'skills/benchmark-yylo', file);
+      // Normalize wrapping so this tests the semantic contract, not layout.
+      const text = fs.readFileSync(target, 'utf8');
+      const pattern = new RegExp(contract.split(/\s+/).map((word) => word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('\\s+'));
+      assert.match(text, pattern);
+      fs.writeFileSync(target, text.replace(pattern, 'REMOVED BENCHMARK BOUNDARY'));
+      assert.throws(() => execFileSync(process.execPath, [path.join(root, 'scripts/validate.mjs')],
+        { stdio: 'pipe' }), new RegExp(diagnostic));
+    } finally {
+      fs.rmSync(root, { recursive: true, force: true });
+    }
+  });
+}
 for (const [name, injected] of [
   ['arbiter command', 'yy merge arbiter run TASK_ID'],
   ['drive command', 'yy merge drive TASK_ID'],

@@ -6,6 +6,7 @@ const root = path.resolve(import.meta.dirname, '..');
 const skillsRoot = path.join(root, 'skills');
 const expected = [
   'artifact-yylo',
+  'benchmark-yylo',
   'ledger-tasks-yylo',
   'plan-ledger-tasks-yylo',
   'ralph-loop-yylo',
@@ -21,6 +22,11 @@ if (JSON.stringify(actual) !== JSON.stringify(expected)) {
 
 const requiredContracts = {
   'artifact-yylo': ['$ARGUMENTS'],
+  'benchmark-yylo': ['$ARGUMENTS', 'references/historical-tasks.md',
+    'yy pi --model openai-codex/<complete-name>', 'trusted-host lane requires explicit owner approval',
+    'zero-dispatch setup canary', 'baseline failure and reference success',
+    'Unknown quality', 'new plan/cohort', 'Unknown cost is unknown, never zero',
+    'owner approval before task 2', 'not a failed capability test'],
   'ledger-tasks-yylo': ['$ARGUMENTS'],
   'plan-ledger-tasks-yylo': ['$ARGUMENTS'],
   'ralph-loop-yylo': ['Read [references/implement.md](references/implement.md) completely',
@@ -45,7 +51,7 @@ for (const slug of expected) {
   for (const literal of [...requiredContracts[slug], 'Record kind/profile',
     'actual immutable Record ID', 'actual Ledger slug', 'native get readback',
     'Never invent a slug', 'IDs remain authoritative']) {
-    if (!text.includes(literal)) throw new Error(`${slug} lost invocation contract: ${literal}`);
+    if (!text.replace(/\s+/g, ' ').includes(literal)) throw new Error(`${slug} lost invocation contract: ${literal}`);
   }
   for (const match of text.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)) {
     const target = match[1];
@@ -96,6 +102,14 @@ for (const contract of [
   'read-only observer of existing evidence', 'never replay/reset them automatically',
 ]) {
   if (!implementation.replace(/\s+/g, ' ').includes(contract)) throw new Error(`missing native delivery contract: ${contract}`);
+}
+
+const benchmark = fs.readFileSync(path.join(skillsRoot, 'benchmark-yylo/references/historical-tasks.md'), 'utf8').replace(/\s+/g, ' ');
+for (const contract of ['exact attempt-directory shape', 'conflicting ancestor YYLO workspace',
+  'ignore rules that hide durable configuration', 'separate grader copy',
+  'fixed deterministic-command timeout', 'metadata/history retrieval is not byte round-trip proof',
+  'not a verified native report', 'Candidate staging, commits and new files all count']) {
+  if (!benchmark.includes(contract)) throw new Error(`missing benchmark preparation contract: ${contract}`);
 }
 
 const config = JSON.parse(fs.readFileSync(path.join(root, 'skills.sh.json'), 'utf8'));
