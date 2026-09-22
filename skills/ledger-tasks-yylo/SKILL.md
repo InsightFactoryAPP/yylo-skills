@@ -1,18 +1,39 @@
 ---
 name: ledger-tasks-yylo
-description: Comprehensive guide for using YYLO Ledger task management. Covers all commands (create, list, search, get, mark, update, archive, deps, ready, order, merge), dependency management, best practices, and workflow patterns. Use when you need to interact with the YYLO Ledger board.
+description: Retrieve any YYLO Ledger Record by ID, discover PDRs and artifacts, and manage tasks and dependencies. Use for unknown record types, universal get/search, task operations, and source-of-truth boundaries.
 argument-hint: "[command or workflow question]"
 enable-shell-directives: true
 ---
 
 ## YYLO Ledger CLI Reference
 
-Use `yy ledger` for all commands. Ledger 0.3.x exposes both the compatible flat task commands and the native ID-first `record|task|wiki|workflow|artifact` groups. `yy kanban` is a labelled compatibility alias for the same controller-routed task runtime.
+Use `yy ledger` from the controller, or `yylo-ledger` standalone. Ledger exposes compatible flat task commands and native ID-first `record|task|wiki|pdr|workflow|artifact` groups, subject to installed help. `yy kanban` is a labelled compatibility alias for the same controller-routed runtime.
+
+### Retrieve any Record first
+
+Preflight `yy ledger get --help`. When it advertises universal retrieval, use
+`yy ledger get RECORD_ID -f json` for tasks, documents, PDRs and artifacts without
+knowing the type. If installed get is task-only, use
+`yy ledger record get RECORD_ID -f json` after checking native help; if absent,
+stop for an upgrade. Do not try each type until one works.
+
+New generated IDs use `task_`, `doc_`, or `artifact_` for storage kind only;
+existing IDs remain unchanged. New PDRs are artifact/report, while historical
+document/pdr Records remain readable through the same command. Exact reads
+include hot and archived Records in the selected project. When no ID is known,
+start with `yy ledger record search --projection summary --limit 20 -f json`;
+use explicit `--scope archive|all` for cold discovery.
+
+Read [references/retrieval.md](references/retrieval.md) for bounded content,
+`--content` byte retrieval, PDR examples, compatibility and refusal handling.
+Small readable non-task payloads are included by default; Record metadata alone
+is not proof that payload bytes were retrieved. Typed commands remain for
+mutation and specialized rendering/validation.
 
 ### Supported task contract
 
 - Preflight installed `yy ledger --version` and `yy ledger --help`; command help is authoritative for the selected runtime.
-- Use the flat task surface for lifecycle task management. Use the dedicated native skills for wiki, workflow, and artifact Records rather than guessing their arguments.
+- Use universal get for reads, flat task commands for task bookkeeping, and the controller's `yy task` lifecycle for managed delivery. Use dedicated wiki, workflow, and artifact skills for typed mutations rather than guessing arguments.
 - New operational PDRs, contracts, plans, reports, receipts, and evidence belong in typed Artifact Records, not product documentation, task bodies/responses, or new `.juno_task/specs` files.
 - If a required native group is absent, fail closed and request a Ledger upgrade. Never invoke mutable source directly or write Ledger store files by hand.
 - Read current task state before mutation, preserve mutation receipts where offered, and never bypass controller routing or lifecycle state with direct file edits.
@@ -45,7 +66,7 @@ yy ledger search --commit abc123
 ```
 Filters: `--status`, `--tag`, `--body`, `--response`, `--commit`, `--open` (no agent_response), `--recent`, `--exclude` (exclude tags)
 
-**GET** — Full task details (including dependency info and related task details)
+**GET** — Universal Record read; task details retain dependency and related-task compatibility
 ```bash
 yy ledger get TASK_ID
 ```

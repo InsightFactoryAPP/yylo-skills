@@ -24,9 +24,20 @@ The read-only Ledger host also has no workflow execution endpoint.
 
 ## Discover and inspect
 
+Preflight `yy ledger get --help`; prefer `yy ledger get RECORD_ID -f json` for
+known IDs without needing the type. If installed get is task-only, use
+`yy ledger record get RECORD_ID -f json` after checking native help; stop for an
+upgrade if unavailable. New generated workflow IDs use `doc_`, not a workflow
+prefix; existing IDs remain unchanged. Exact reads include hot and archived
+Records in the selected project. Unknown kinds can be discovered with bounded
+`record search`; do not try each kind or project after a miss or ambiguity.
+Universal get includes readable UTF-8 text up to 64 KiB by default; omission
+reasons are not empty workflow definitions. Request explicit bounded `--content`
+when needed (maximum 16 MiB). Typed get remains for source and schema validation.
+
 ```bash
 yy ledger workflow search --text "release verification" --projection summary --limit 20 -f json
-yy ledger workflow get RECORD_ID -f json
+yy ledger get RECORD_ID -f json
 yy ledger workflow get RECORD_ID --raw
 yy ledger workflow get RECORD_ID --validated
 ```

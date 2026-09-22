@@ -62,6 +62,26 @@ for (const slug of expected) {
   }
 }
 
+const retrievalSkills = ['ledger-tasks-yylo', 'artifact-yylo', 'wiki-yylo',
+  'workflow-yylo', 'plan-ledger-tasks-yylo', 'understand-project-yylo'];
+for (const slug of retrievalSkills) {
+  const text = fs.readFileSync(path.join(skillsRoot, slug, 'SKILL.md'), 'utf8').replace(/\s+/g, ' ');
+  for (const contract of ['yy ledger get --help', 'yy ledger get RECORD_ID -f json',
+    'yy ledger record get RECORD_ID -f json', 'existing IDs remain unchanged']) {
+    if (!text.toLowerCase().includes(contract.toLowerCase())) throw new Error(`${slug} lost retrieval contract: ${contract}`);
+  }
+}
+const retrieval = fs.readFileSync(path.join(skillsRoot, 'ledger-tasks-yylo/references/retrieval.md'), 'utf8').replace(/\s+/g, ' ');
+for (const contract of ['task_', 'doc_', 'artifact_', 'Existing IDs remain unchanged',
+  'Never guess types', 'artifact/report', 'document/pdr', '64 KiB', '16 MiB',
+  '--content --max-content-bytes', 'never downloads external/link payloads',
+  'Metadata', 'metadata/history alone', 'selected project', '--scope archive',
+  'A missing ID means no match', 'stop on corruption']) {
+  if (!retrieval.toLowerCase().includes(contract.toLowerCase())) {
+    throw new Error(`missing universal retrieval contract: ${contract}`);
+  }
+}
+
 const markdown = [];
 for (const directory of [root, ...expected.map((slug) => path.join(skillsRoot, slug))]) {
   const visit = (current) => {

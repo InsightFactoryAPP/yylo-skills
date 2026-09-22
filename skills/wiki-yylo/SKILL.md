@@ -27,12 +27,23 @@ evidence, or owner-only operational receipts in a wiki.
 
 ## Discover before creating
 
-Use bounded summary searches first. Resolve records by immutable ID whenever one
-is known; slugs and aliases are discovery conveniences, not replacement identity.
+When an ID is known, preflight `yy ledger get --help` and prefer
+`yy ledger get RECORD_ID -f json` without needing its type. If installed get is
+task-only, use `yy ledger record get RECORD_ID -f json` after checking native help;
+stop for an upgrade if unavailable. New generated wiki IDs use `doc_`; existing
+IDs remain unchanged. Exact reads include hot and archived Records in the selected
+project; never guess another type or project after a miss or ambiguity.
+
+When no ID is known, use bounded summary searches first (use `record search` for
+unknown kinds). Slugs and aliases are discovery conveniences, not replacement
+identity. Universal get includes readable UTF-8 text up to 64 KiB by default;
+inspect omission reasons instead of treating missing content as an empty page.
+Use explicit `--content --max-content-bytes N` when needed (maximum 16 MiB).
+Typed wiki get remains available for specialized source/rendering operations.
 
 ```bash
 yy ledger wiki search --text "deployment policy" --projection summary --limit 20 -f json
-yy ledger wiki get RECORD_ID -f json
+yy ledger get RECORD_ID -f json
 yy ledger wiki get RECORD_ID --raw
 ```
 

@@ -17,6 +17,23 @@ enable-shell-directives: true
 
 Use `--id`, not legacy `--ID`, for Kanban mutations. Return the task IDs and a short dependency/order summary.
 
+## Retrieve the PDR by ID
+
+Preflight `yy ledger get --help`; use `yy ledger get RECORD_ID -f json` to read
+back a known PDR without guessing its storage type. If installed get is task-only,
+use `yy ledger record get RECORD_ID -f json` after checking native help; stop for
+an upgrade if unavailable. New PDRs remain artifact/report (`artifact_` IDs on
+supporting runtimes); historical document/pdr remains readable. Existing IDs
+remain unchanged: do not invent `pdr_` or rewrite stored references.
+
+Unknown IDs require bounded `record search --projection summary --limit 20`, not
+trial-and-error typed gets. Exact reads include hot/archive in the selected
+project; cold discovery needs explicit scope. Metadata/history alone is not byte
+round-trip proof. Verify included text or explicitly retrieve local/inline bytes
+with `--content --max-content-bytes N` (64 KiB default, 16 MiB maximum). Check exit
+status and digest/size; never download external payloads implicitly. If exact-byte
+retrieval is unavailable, retain the draft and request a compatible runtime.
+
 ## User-facing Record results
 
 After creation, update, discovery, or handoff, report the Record kind/profile,

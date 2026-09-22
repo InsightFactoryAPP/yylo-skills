@@ -68,11 +68,27 @@ replace an existing release tag. `capabilities.json`
 retains evidence for previously published releases; do not invent new release
 hashes before publication.
 
+## Universal Ledger retrieval guidance
+
+The source skills teach `yy ledger get ID` (`yylo-ledger get ID` standalone) as
+the universal read, with `task_`, `doc_`, and `artifact_` storage-kind prefixes for
+new generated IDs and unchanged historical identities. PDR purpose does not
+require a PDR prefix: new PDRs remain artifact/report, with historical
+document/pdr still readable. See the
+[retrieval guide](skills/ledger-tasks-yylo/references/retrieval.md) for bounded
+search, hot/archive lookup, content limits, explicit bytes and refusal handling.
+
+This source contract requires a matching Ledger runtime and a separately reviewed
+skills release; it is not a claim that installed flat get already supports all
+kinds. Inspect `get --help`; on task-only versions use native `record get` if
+available, not trial-and-error typed commands. Source merge does not install,
+activate, publish, or overwrite customized skills.
+
 ## Skills
 
 | Skill | Purpose |
 | --- | --- |
-| [`ledger-tasks-yylo`](skills/ledger-tasks-yylo/) | Operate YYLO Ledger task management and source-of-truth boundaries. |
+| [`ledger-tasks-yylo`](skills/ledger-tasks-yylo/) | Retrieve any Ledger Record by ID and operate tasks, dependencies and source-of-truth boundaries. |
 | [`wiki-yylo`](skills/wiki-yylo/) | Find and maintain durable Markdown knowledge as revisioned Ledger Records. |
 | [`workflow-yylo`](skills/workflow-yylo/) | Store and validate workflow Records while keeping execution separately authorized. |
 | [`artifact-yylo`](skills/artifact-yylo/) | Capture and inspect durable, provenance-bound Ledger evidence. |

@@ -6,6 +6,42 @@ import path from 'node:path';
 import test from 'node:test';
 
 const source = path.resolve(import.meta.dirname, '..');
+
+test('accepts complete canonical retrieval guidance', () => {
+  assert.doesNotThrow(() => execFileSync(process.execPath,
+    [path.join(source, 'scripts/validate.mjs')], { stdio: 'pipe' }));
+});
+
+const retrievalCases = [
+  ...['ledger-tasks-yylo', 'artifact-yylo', 'wiki-yylo', 'workflow-yylo',
+    'plan-ledger-tasks-yylo', 'understand-project-yylo'].flatMap((skill) =>
+      ['yy ledger get --help', 'yy ledger get RECORD_ID -f json',
+        'yy ledger record get RECORD_ID -f json', 'existing IDs remain unchanged'].map((contract) =>
+        [`skills/${skill}/SKILL.md`, contract, 'lost retrieval contract'])),
+  ...['artifact/report', 'document/pdr', '64 KiB', '16 MiB',
+    '--content --max-content-bytes', 'never downloads external/link payloads',
+    'metadata/history alone', 'A missing ID means no match', 'stop on corruption'].map((contract) =>
+      ['skills/ledger-tasks-yylo/references/retrieval.md', contract, 'missing universal retrieval contract']),
+];
+for (const [file, contract, diagnostic] of retrievalCases) {
+  test(`rejects removed retrieval boundary in ${file}: ${contract}`, () => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'yylo-retrieval-contract-'));
+    try {
+      for (const item of ['skills', 'scripts', 'VERSION', 'skills.sh.json', '.claude-plugin']) {
+        fs.cpSync(path.join(source, item), path.join(root, item), { recursive: true });
+      }
+      const target = path.join(root, file);
+      const text = fs.readFileSync(target, 'utf8');
+      const pattern = new RegExp(contract.split(/\s+/).map((word) => word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('\\s+'), 'gi');
+      assert.match(text, pattern);
+      fs.writeFileSync(target, text.replace(pattern, 'REMOVED RETRIEVAL BOUNDARY'));
+      assert.throws(() => execFileSync(process.execPath, [path.join(root, 'scripts/validate.mjs')],
+        { stdio: 'pipe' }), new RegExp(diagnostic));
+    } finally {
+      fs.rmSync(root, { recursive: true, force: true });
+    }
+  });
+}
 for (const skill of fs.readdirSync(path.join(source, 'skills'))) {
   test(`rejects missing actual slug reporting in ${skill}`, () => {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'yylo-reporting-contract-'));

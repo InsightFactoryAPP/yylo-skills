@@ -1,6 +1,9 @@
 # `ledger-tasks-yylo`
 
-Operate YYLO Ledger tasks, dependencies, history, and source-of-truth boundaries.
+Retrieve any YYLO Ledger Record by ID, discover PDRs/artifacts, and manage tasks,
+dependencies, history and source-of-truth boundaries. Start with the installed
+`get --help` capability check; see [retrieval guidance](references/retrieval.md)
+for the universal command, legacy compatibility and bounded payload reads.
 
 ## Install
 

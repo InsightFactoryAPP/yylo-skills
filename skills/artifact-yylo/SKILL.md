@@ -69,15 +69,38 @@ or manually managed controller paths.
 
 ## Find and verify
 
+Preflight `yy ledger get --help`; prefer `yy ledger get RECORD_ID -f json` for
+any known ID without guessing its kind. If installed get is task-only, use
+`yy ledger record get RECORD_ID -f json` after checking native help; stop for an
+upgrade if unavailable. Typed artifact get remains useful for manifest metadata.
+New generated Artifact IDs use `artifact_`; existing IDs remain unchanged. New
+PDRs are artifact/report, while historical document/pdr Records are also readable
+through universal get. Do not add a prefix to an existing ID.
+
 ```bash
 yy ledger artifact search --profile report --projection summary --limit 20 -f json
+yy ledger get RECORD_ID -f json
+# Explicit metadata-only native read:
 yy ledger artifact get RECORD_ID -f json
 yy ledger artifact history RECORD_ID -f ndjson
 ```
 
 Use bounded metadata/summary projections before requesting payload details.
-Verify profile, mode, media type, digest, size, provenance, retention, revision,
-and immutable ID before relying on evidence.
+For an unknown kind, discover with `yy ledger record search --projection summary --limit 20 -f json`.
+Exact get includes hot and archived Records in the selected project; discovery
+is hot-only unless `--scope archive|all` is explicit. Do not try other types or
+projects after an exact miss or ambiguity; preserve the diagnostic.
+
+Universal get includes readable UTF-8 local/inline content up to 64 KiB by default.
+Large/binary/non-UTF-8/external payloads return an omission reason, not empty
+successful content. With supporting help, use `yy ledger get RECORD_ID --content
+--max-content-bytes 1048576` for exact local/inline bytes; the maximum is 16 MiB.
+Select a fresh external output file and check exit status. This is not JSON output
+and `--raw` is not its substitute. Ledger never downloads external/link payloads;
+external retrieval requires separate authorization. Metadata/history readback is
+not byte round-trip proof. Verify profile, mode, media type, digest, size,
+provenance, retention, revision, immutable ID and the intended bytes before
+relying on evidence. Stop on corruption; do not silently use a different revision.
 
 Artifact payloads are immutable evidence. Represent replacement with explicit
 predecessor/successor relationships and the installed revision-safe update
