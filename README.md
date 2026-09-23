@@ -35,6 +35,10 @@ Every canonical slug ends in `-yylo`, keeping selector prefixes useful: type `w`
 
 ## Native delivery and compatible CLI installation
 
+Version 2.0.4 adds `benchmark-yylo`, completing the eight-skill set required by
+YYLO CLI 0.2.9. It also includes the current external-agent execution and
+universal Ledger retrieval guidance. CLI 0.2.9 requires skills `^2.0.4`.
+
 Version 2.0.3 requires user-facing Record results to include the actual kind/profile,
 immutable ID, and Ledger-returned slug. Missing fields must be reported as unavailable,
 not guessed. Validator regressions protect this contract across all canonical skills.
@@ -97,9 +101,8 @@ activate, publish, or overwrite customized skills.
 | [`plan-ledger-tasks-yylo`](skills/plan-ledger-tasks-yylo/) | Create a PDR and implementation-sized Ledger tasks. |
 | [`ralph-loop-yylo`](skills/ralph-loop-yylo/) | Execute exactly one explicitly assigned Ledger task through validated delivery. |
 
-The new `benchmark-yylo` source skill (for YYLO Benchmark / `yylo-benchmark` requests)
-requires a separately reviewed compatible release before installation; it is not
-claimed to exist in the current published version. It distinguishes isolated and
+The `benchmark-yylo` skill (for YYLO Benchmark / `yylo-benchmark` requests)
+is included starting with version 2.0.4. It distinguishes isolated and
 owner-approved trusted-host runs, canonical `yy pi` dispatch, exact-shape setup
 canaries, invalid infrastructure, immutable repairs and pilot approval gates.
 
